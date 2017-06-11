@@ -1,17 +1,29 @@
 package nju.software.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by ZhangYF on 2017/6/11.
  */
 @Entity
+@XmlRootElement
 public class Selection {
     private Integer id;
     private Integer studentid;
     private Integer studentInstitution;
     private Integer courseid;
     private Integer courseInstitution;
+
+    public Selection() {
+    }
+
+    public Selection(Integer studentid, Integer studentInstitution, Integer courseid, Integer courseInstitution) {
+        this.studentid = studentid;
+        this.studentInstitution = studentInstitution;
+        this.courseid = courseid;
+        this.courseInstitution = courseInstitution;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
