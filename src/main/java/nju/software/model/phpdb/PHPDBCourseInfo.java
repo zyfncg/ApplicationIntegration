@@ -3,9 +3,13 @@ package nju.software.model.phpdb;
 import nju.software.model.standard.StandardCourseInfo;
 import nju.software.model.standard.Standardable;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by Anson Shaw on 2017/6/11.
  */
+@XmlRootElement(name = "course")
 public class PHPDBCourseInfo implements Standardable {
     private int institutionId;
 
@@ -26,6 +30,7 @@ public class PHPDBCourseInfo implements Standardable {
         return institutionId;
     }
 
+    @XmlElement(name = "courseInstitution")
     public void setInstitutionId(int institutionId) {
         this.institutionId = institutionId;
     }
@@ -34,6 +39,7 @@ public class PHPDBCourseInfo implements Standardable {
         return courseId;
     }
 
+    @XmlElement(name = "cid")
     public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
@@ -42,6 +48,7 @@ public class PHPDBCourseInfo implements Standardable {
         return name;
     }
 
+    @XmlElement(name = "cname")
     public void setName(String name) {
         this.name = name;
     }
