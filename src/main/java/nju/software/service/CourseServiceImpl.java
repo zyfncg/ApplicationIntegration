@@ -1,11 +1,6 @@
 package nju.software.service;
 
-import nju.software.dao.CourseDao;
-import nju.software.model.Course;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by ZhangYF on 2017/6/4.

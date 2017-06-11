@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://115.159.161.87:3306/edu_admin?useSSL=false</property>
+        <property name="connection.url">jdbc:mysql://115.159.161.87:3306/integration</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.id.new_generator_mappings">false</property>
 
@@ -18,6 +18,7 @@
 
         <mapping class="nju.software.model.Student"/>
         <mapping class="nju.software.model.Course"/>
+        <mapping class="nju.software.model.Selection"/>
         <!--<mapping class="nju.software.model.StudCour"/>-->
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
