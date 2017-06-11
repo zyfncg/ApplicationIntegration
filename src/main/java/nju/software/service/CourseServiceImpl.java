@@ -41,4 +41,15 @@ public class CourseServiceImpl implements CourseService{
         selectionDao.delete(selection);
         return true;
     }
+
+    @Override
+    public int studyCourseNum(int studentid, int institution) {
+        return selectionDao.findAllByStudentidAndStudentInstitution(studentid,institution).size();
+    }
+
+    @Override
+    public int getstudentNum(int courseid, int institution) {
+        return selectionDao.findAllByCourseidAndCourseInstitution(courseid, institution).size();
+    }
+
 }

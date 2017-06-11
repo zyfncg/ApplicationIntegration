@@ -14,5 +14,7 @@ public interface SelectionDao extends JpaRepository<Selection,Integer>{
 
     List<Selection> findAllByStudentidAndStudentInstitution(int studentid, int studentInstitution);
 
+    List<Selection> findAllByCourseidAndCourseInstitution(int courseid, int courseInstitution);
+
     Selection findByStudentidAndStudentInstitutionAndCourseidAndCourseInstitution(int studentid, int studentInsitution, int courseid ,int courseInstitution);
 }
