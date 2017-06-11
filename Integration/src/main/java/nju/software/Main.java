@@ -25,26 +25,48 @@ public class Main {
 
 
     public static void main(String[] args){
-        String url = "http://localhost:8080/student/chooseCourse";
-        int studentid = 10001;
-        int courseid = 30001;
-        Random random = new Random();
-        for (int i = 0; i < 50; i++) {
-            studentid = 10001 + i;
-            Set<Integer> map = new HashSet<>();
-            for (int j = 0; j < 5; j++) {
-
-                int ci = random.nextInt(10);
-                while(map.contains(ci)){
-                    ci = random.nextInt(10);
+        String url = "http://115.159.161.87:8080/edu_admin/student/courses";
+        String result = "";
+        BufferedReader in = null;
+        try {
+            URL realUrl = new URL(url);
+            // 打开和URL之间的连接
+            URLConnection connection = realUrl.openConnection();
+            // 设置通用的请求属性
+            connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("user-agent",
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
+            // 建立实际的连接
+            connection.connect();
+            // 获取所有响应头字段
+            Map<String, List<String>> map = connection.getHeaderFields();
+            // 遍历所有的响应头字段
+            for (String key : map.keySet()) {
+                System.out.println(key + "--->" + map.get(key));
+            }
+            // 定义 BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(
+                    connection.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            System.out.println("发送GET请求出现异常！" + e);
+            e.printStackTrace();
+        }
+        // 使用finally块来关闭输入流
+        finally {
+            try {
+                if (in != null) {
+                    in.close();
                 }
-                map.add(ci);
-                courseid = 30001 + ci;
-                String param = "studentid="+studentid+"&courseid="+courseid;
-                System.out.println(param);
-                System.out.println(sendPost(url,param,"utf-8"));
+            } catch (Exception e2) {
+                e2.printStackTrace();
             }
         }
+        System.out.println(result);
     }
 
     public static String sendPost(String url, String param,String charset) {
