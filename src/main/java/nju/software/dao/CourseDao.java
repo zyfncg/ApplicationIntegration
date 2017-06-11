@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Created by ZhangYF on 2017/6/4.
  */
-@Repository
-public interface CourseDao extends JpaRepository<Course, Integer> {
+//@Repository
+public interface CourseDao {
 
-    @Modifying
-    @Query("delete from Course where courseid in (select course.courseid from StudCour where student.studentid=?1)")
+//    @Modifying
+//    @Query("delete from Course where courseid in (select course.courseid from StudCour where student.studentid=?1)")
     List<Course> findStudyCourses(int studentid);
 
 }

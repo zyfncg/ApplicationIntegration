@@ -17,12 +17,7 @@ import java.util.Set;
  */
 public class Main {
 
-    private static StudCourService studCourService = new StudCourServiceImpl();
-
-    private static StudentService studentService = new StudentServiceImpl();
-
     private static CourseService courseService = new CourseServiceImpl();
-
 
     public static void main(String[] args){
         String url = "http://localhost:8080/student/chooseCourse";

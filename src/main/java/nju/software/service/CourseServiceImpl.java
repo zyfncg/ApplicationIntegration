@@ -13,33 +13,26 @@ import java.util.List;
 @Service(value = "courseService")
 public class CourseServiceImpl implements CourseService{
 
-    @Autowired
-    private CourseDao courseDao;
+//    @Autowired
+//    private CourseDao courseDao;
 
     @Override
-    public Course getCourse(int courseid) {
-        return courseDao.findOne(courseid);
+    public String getAllCourse(int institutionId) {
+        return null;
     }
 
     @Override
-    public List<Course> getAllCourse() {
-        return courseDao.findAll();
+    public String getStudyCourse(int institutionId, int studentId) {
+        return null;
     }
 
     @Override
-    public List<Course> getStudyCourse(int studentid) {
-        return courseDao.findStudyCourses(studentid);
+    public boolean addCourse(int institutionId, int studentId, int courseInstitution, int courseId) {
+        return false;
     }
 
     @Override
-    public boolean addCourse(Course course) {
-        courseDao.save(course);
-        return true;
-    }
-
-    @Override
-    public boolean updateCourse(Course course) {
-        courseDao.save(course);
-        return true;
+    public boolean deleteCourse(int institutionId, int studentId, int courseInstitution, int courseId) {
+        return false;
     }
 }

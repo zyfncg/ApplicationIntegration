@@ -1,20 +1,15 @@
 package nju.software.service;
 
-import nju.software.model.Course;
-
-import java.util.List;
-
 /**
  * Created by ZhangYF on 2017/6/4.
  */
 public interface CourseService {
-    public Course getCourse(int courseid);
 
-    public List<Course> getAllCourse();
+    String getAllCourse(int institutionId);
 
-    public List<Course> getStudyCourse(int studentid);
+    String getStudyCourse(int institutionId, int studentId);
 
-    public boolean addCourse(Course course);
+    boolean addCourse(int institutionId, int studentId, int courseInstitution, int courseId);
 
-    public boolean updateCourse(Course course);
+    boolean deleteCourse(int institutionId, int studentId, int courseInstitution, int courseId);
 }

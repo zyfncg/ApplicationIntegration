@@ -18,7 +18,7 @@
 
         <mapping class="nju.software.model.Student"/>
         <mapping class="nju.software.model.Course"/>
-        <mapping class="nju.software.model.StudCour"/>
+        <!--<mapping class="nju.software.model.StudCour"/>-->
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
 
