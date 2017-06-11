@@ -1,5 +1,6 @@
 package nju.software.controller;
 
+import nju.software.model.Selection;
 import nju.software.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +31,7 @@ public class StudentController {
 
     @RequestMapping(value = "/studyCourses")
     @ResponseBody
-    public String getStudyCourses(HttpServletRequest request){
+    public List<Selection> getStudyCourses(HttpServletRequest request){
         int institutionId = Integer.parseInt(request.getParameter("institutionId"));
         int studentId = Integer.parseInt(request.getParameter("studentId"));
         return courseService.getStudyCourse(institutionId, studentId);
