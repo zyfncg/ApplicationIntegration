@@ -2,6 +2,10 @@ package nju.software.service;
 
 import nju.software.dao.SelectionDao;
 import nju.software.model.Selection;
+import nju.software.model.phpdb.PHPDBCourseInfo;
+import nju.software.model.phpdb.PHPDBCourseList;
+import nju.software.model.pythondb.PythonDBCourseInfo;
+import nju.software.model.pythondb.PythonDBCourseList;
 import nju.software.model.standard.StandardCourseList;
 import nju.software.util.HttpUtil;
 import nju.software.util.XmlUtil;
@@ -36,9 +40,27 @@ public class CourseServiceImpl implements CourseService{
         StandardCourseList list = new StandardCourseList();
         if (institutionId == JAVA_DB_INSTITUTION) {
             String xmlFromPythonDB = HttpUtil.post(PYTHON_HOST, null);
+            PythonDBCourseList pyList = XmlUtil.converyToJavaBean(
+                    xmlFromPythonDB, PythonDBCourseList.class
+            );
+
+            for (PythonDBCourseInfo info : pyList.getCourses()) {
+                list.getCourses().add(info.toStandard());
+            }
+
+            String xmlFromPHPDB = HttpUtil.post(PHP_HOST, null);
+            PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
+                    xmlFromPHPDB, PHPDBCourseList.class
+            );
+
+            for (PHPDBCourseInfo info : phpList.getCourses()) {
+                list.getCourses().add(info.toStandard());
+            }
+
         }
         else if (institutionId == PYTHON_DB_INSTITUTION) {
-
+            String xmlFromJavaDB = HttpUtil.post(JAVA_HOST, null);
+//            JavaDBCourseList
         }
         else if (institutionId == PHP_DB_INSTITUTION) {
 
