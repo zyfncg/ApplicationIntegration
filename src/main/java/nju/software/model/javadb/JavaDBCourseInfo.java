@@ -1,7 +1,7 @@
 package nju.software.model.javadb;
 
 import nju.software.model.standard.StandardCourseInfo;
-import nju.software.model.standard.Standardized;
+import nju.software.model.standard.CourseStandardized;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by Anson Shaw on 2017/6/11.
  */
 @XmlRootElement(name = "course")
-public class JavaDBCourseInfo implements Standardized {
+public class JavaDBCourseInfo implements CourseStandardized {
 
     private Integer courseid;
     private String name;

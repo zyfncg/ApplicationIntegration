@@ -72,7 +72,7 @@
     <!--&lt;!&ndash; 声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager &ndash;&gt;-->
     <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
         <!--<tx:attributes>-->
-            <!--<tx:method name="get*" propagation="REQUIRED" />-->
+            <!--<tx:method name="extract*" propagation="REQUIRED" />-->
             <!--<tx:method name="check*" propagation="REQUIRED" />-->
             <!--<tx:method name="*" propagation="NOT_SUPPORTED" read-only="true" />-->
         <!--</tx:attributes>-->

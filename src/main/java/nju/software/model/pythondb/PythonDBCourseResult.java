@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Anson Shaw on 2017/6/11.
  */
 @XmlRootElement(name = "result")
-public class PythonDBResult {
+public class PythonDBCourseResult {
 
     private String success;
 

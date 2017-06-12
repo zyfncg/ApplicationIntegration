@@ -8,13 +8,13 @@ import java.util.Map;
 /**
  * Created by Anson Shaw on 2017/6/12.
  */
-public class IntegrationTest {
+public class CourseTest {
 
-    private static final String JAVA_HOST = "http://115.159.161.87:8080/edu_admin/integration/courses";
-
-    private static final String PYTHON_HOST = "http://111.231.22.133/getAllCourseInfo";
-
-    private static final String PHP_HOST = "http://118.89.192.189/Controller.php";
+//    private static final String JAVA_HOST = "http://115.159.161.87:8080/edu_admin/integration/courses";
+//
+//    private static final String PYTHON_HOST = "http://111.231.22.133/getAllCourseInfo";
+//
+//    private static final String PHP_HOST = "http://118.89.192.189/Controller.php";
 
     public static void main(String[] args) {
         String url = "http://localhost:8088/student/courses";
@@ -38,7 +38,7 @@ public class IntegrationTest {
 //        JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
 //                javaXml, JavaDBCourseList.class
 //        );
-//        PythonDBResult pyInfos = new PythonDBResult();
+//        PythonDBCourseResult pyInfos = new PythonDBCourseResult();
 //        PythonDBCourseList pyCourseList = new PythonDBCourseList();
 //        pyCourseList.setCourseList(new LinkedList<PythonDBCourseInfo>());
 //        pyInfos.setList(pyCourseList);
@@ -50,8 +50,8 @@ public class IntegrationTest {
 //
 //
 //        String pythonXml = HttpUtil.post(PYTHON_HOST, null);
-//        PythonDBResult pyList = XmlUtil.converyToJavaBean(
-//                pythonXml, PythonDBResult.class
+//        PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
+//                pythonXml, PythonDBCourseResult.class
 //        );
 //        PHPDBCourseList phpInfos = new PHPDBCourseList();
 //        phpInfos.setCourseList(new LinkedList<PHPDBCourseInfo>());

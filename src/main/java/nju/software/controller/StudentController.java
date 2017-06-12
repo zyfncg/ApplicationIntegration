@@ -31,7 +31,7 @@ public class StudentController {
 
     @RequestMapping(value = "/studyCourses")
     @ResponseBody
-    public List<Selection> getStudyCourses(HttpServletRequest request){
+    public String getStudyCourses(HttpServletRequest request){
         int institutionId = Integer.parseInt(request.getParameter("institutionId"));
         int studentId = Integer.parseInt(request.getParameter("studentId"));
         return courseService.getStudyCourse(institutionId, studentId);

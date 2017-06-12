@@ -17,7 +17,7 @@ public interface CourseService {
      * @param studentId
      * @return
      */
-    List<Selection> getStudyCourse(int institutionId, int studentId);
+    String getStudyCourse(int institutionId, int studentId);
 
     /**
      * 选课
