@@ -15,9 +15,6 @@
         <!-- 是否对SQL进行格式化 -->
         <property name="format_sql">true</property>
 
-
-        <mapping class="nju.software.model.Student"/>
-        <mapping class="nju.software.model.Course"/>
         <mapping class="nju.software.model.Selection"/>
         <!--<mapping class="nju.software.model.StudCour"/>-->
         <!-- <property name="connection.username"/> -->

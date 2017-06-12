@@ -2,17 +2,22 @@ package nju.software.service;
 
 import nju.software.dao.SelectionDao;
 import nju.software.model.Selection;
+import nju.software.model.javadb.JavaDBCourseInfo;
+import nju.software.model.javadb.JavaDBCourseList;
 import nju.software.model.phpdb.PHPDBCourseInfo;
 import nju.software.model.phpdb.PHPDBCourseList;
 import nju.software.model.pythondb.PythonDBCourseInfo;
 import nju.software.model.pythondb.PythonDBCourseList;
-import nju.software.model.standard.StandardCourseList;
+import nju.software.model.pythondb.PythonDBResult;
 import nju.software.util.HttpUtil;
 import nju.software.util.XmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ZhangYF on 2017/6/4.
@@ -23,50 +28,12 @@ public class CourseServiceImpl implements CourseService{
     @Autowired
     private SelectionDao selectionDao;
 
-    private static final int JAVA_DB_INSTITUTION = 1;
-
-    private static final int PYTHON_DB_INSTITUTION = 2;
-
-    private static final int PHP_DB_INSTITUTION = 3;
-
-    private static final String JAVA_HOST = "";
-
-    private static final String PYTHON_HOST = "";
-
-    private static final String PHP_HOST = "";
-
     @Override
     public String getAllCourse(int institutionId) {
-        StandardCourseList list = new StandardCourseList();
-        if (institutionId == JAVA_DB_INSTITUTION) {
-            String xmlFromPythonDB = HttpUtil.post(PYTHON_HOST, null);
-            PythonDBCourseList pyList = XmlUtil.converyToJavaBean(
-                    xmlFromPythonDB, PythonDBCourseList.class
-            );
-
-            for (PythonDBCourseInfo info : pyList.getCourses()) {
-                list.getCourses().add(info.toStandard());
-            }
-
-            String xmlFromPHPDB = HttpUtil.post(PHP_HOST, null);
-            PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
-                    xmlFromPHPDB, PHPDBCourseList.class
-            );
-
-            for (PHPDBCourseInfo info : phpList.getCourses()) {
-                list.getCourses().add(info.toStandard());
-            }
-
+        if (xmlHandler.containsKey(institutionId)) {
+            return xmlHandler.get(institutionId).get();
         }
-        else if (institutionId == PYTHON_DB_INSTITUTION) {
-            String xmlFromJavaDB = HttpUtil.post(JAVA_HOST, null);
-//            JavaDBCourseList
-        }
-        else if (institutionId == PHP_DB_INSTITUTION) {
-
-        }
-
-        return XmlUtil.convertToXml(list);
+        return "没有这个院系ID";
     }
 
     @Override
@@ -100,4 +67,101 @@ public class CourseServiceImpl implements CourseService{
         return selectionDao.findAllByCourseidAndCourseInstitution(courseid, institution).size();
     }
 
+    private static final int JAVA_DB_INSTITUTION = 1;
+
+    private static final int PYTHON_DB_INSTITUTION = 2;
+
+    private static final int PHP_DB_INSTITUTION = 3;
+
+    private static final String JAVA_HOST = "http://115.159.161.87:8080/edu_admin/integration/courses";
+
+    private static final String PYTHON_HOST = "http://111.231.22.133/getAllCourseInfo";
+
+    private static final String PHP_HOST = "http://118.89.192.189/Controller.php";
+
+    // 向PHP服务起发送请求的参数
+    private static Map<String, String> phpRequestData = new HashMap<>();
+    static {
+        phpRequestData.put("action", "Statistic/course_stat");
+    }
+
+    @FunctionalInterface
+    private interface XmlDataGetter {
+        String get();
+    }
+
+    private static Map<Integer, XmlDataGetter> xmlHandler = new HashMap<>();
+    static {
+        // 处理来自Java服务器的请求
+        xmlHandler.put(JAVA_DB_INSTITUTION, () -> {
+            JavaDBCourseList result = new JavaDBCourseList();
+            result.setCourseList(new LinkedList<>());
+
+            String pythonXml = HttpUtil.post(PYTHON_HOST, null);
+            PythonDBResult pyList = XmlUtil.converyToJavaBean(
+                    pythonXml, PythonDBResult.class
+            );
+            for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
+                result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+            }
+
+            String phpXml = HttpUtil.post(PHP_HOST, phpRequestData);
+            PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
+                    phpXml, PHPDBCourseList.class
+            );
+            for (PHPDBCourseInfo info : phpList.getCourseList()) {
+                result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+            }
+
+            return XmlUtil.convertToXml(result);
+        });
+
+        // 处理来自Python服务器的请求
+        xmlHandler.put(PYTHON_DB_INSTITUTION, () -> {
+            PythonDBCourseList result = new PythonDBCourseList();
+            result.setCourseList(new LinkedList<>());
+
+            String javaXml = HttpUtil.post(JAVA_HOST, null);
+            JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
+                    javaXml, JavaDBCourseList.class
+            );
+            for (JavaDBCourseInfo info : javaList.getCourseList()) {
+                result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+            }
+
+            String phpXml = HttpUtil.post(PHP_HOST, phpRequestData);
+            PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
+                    phpXml, PHPDBCourseList.class
+            );
+            for (PHPDBCourseInfo info : phpList.getCourseList()) {
+                result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+            }
+
+            return XmlUtil.convertToXml(result);
+        });
+
+        // 处理来自PHP服务器的请求
+        xmlHandler.put(PHP_DB_INSTITUTION, () -> {
+            PHPDBCourseList result = new PHPDBCourseList();
+            result.setCourseList(new LinkedList<>());
+
+            String pythonXml = HttpUtil.post(PYTHON_HOST, null);
+            PythonDBResult pyList = XmlUtil.converyToJavaBean(
+                    pythonXml, PythonDBResult.class
+            );
+            for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
+                result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+            }
+
+            String javaXml = HttpUtil.post(JAVA_HOST, null);
+            JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
+                    javaXml, JavaDBCourseList.class
+            );
+            for (JavaDBCourseInfo info : javaList.getCourseList()) {
+                result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+            }
+
+            return XmlUtil.convertToXml(result);
+        });
+    }
 }

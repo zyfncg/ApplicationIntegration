@@ -1,9 +1,5 @@
 package nju.software.model.standard;
 
-import nju.software.model.javadb.JavaDBCourseInfo;
-import nju.software.model.phpdb.PHPDBCourseInfo;
-import nju.software.model.pythondb.PythonDBCourseInfo;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,25 +8,19 @@ import java.util.List;
 /**
  * Created by Anson Shaw on 2017/6/11.
  */
-@XmlRootElement(name = "courses")
+@XmlRootElement(name = "courseList")
 public class StandardCourseList {
 
-    private List courses;
+    private List<StandardCourseInfo> courseList;
 
     @XmlElements({
-            @XmlElement(name = "course", type = JavaDBCourseInfo.class),
-            @XmlElement(name = "course", type = PythonDBCourseInfo.class),
-            @XmlElement(name = "course", type = PHPDBCourseInfo.class)
+            @XmlElement(name = "course", type = StandardCourseInfo.class)
     })
-    public List getCourses() {
-        return courses;
+    public List<StandardCourseInfo> getCourseList() {
+        return courseList;
     }
 
-    public void setCourses(List courses) {
-        this.courses = courses;
-    }
-
-    public Object transform(int institutionId) {
-        return null;
+    public void setCourseList(List<StandardCourseInfo> courseList) {
+        this.courseList = courseList;
     }
 }

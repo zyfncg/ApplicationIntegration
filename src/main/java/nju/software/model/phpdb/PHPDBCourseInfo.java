@@ -1,7 +1,7 @@
 package nju.software.model.phpdb;
 
 import nju.software.model.standard.StandardCourseInfo;
-import nju.software.model.standard.Standardable;
+import nju.software.model.standard.Standardized;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by Anson Shaw on 2017/6/11.
  */
 @XmlRootElement(name = "course")
-public class PHPDBCourseInfo implements Standardable {
+public class PHPDBCourseInfo implements Standardized {
     private int institutionId;
 
     private int courseId;

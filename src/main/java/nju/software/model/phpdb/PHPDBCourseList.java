@@ -1,4 +1,4 @@
-package nju.software.model.pythondb;
+package nju.software.model.phpdb;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
@@ -9,18 +9,19 @@ import java.util.List;
  * Created by Anson Shaw on 2017/6/12.
  */
 @XmlRootElement(name = "courses")
-public class PythonDBCourseList {
+public class PHPDBCourseList {
 
-    private List<PythonDBCourseInfo> courseList;
+    private List<PHPDBCourseInfo> courseList;
 
     @XmlElements({
-            @XmlElement(name = "course", type = PythonDBCourseInfo.class)
+            @XmlElement(name = "course", type = PHPDBCourseInfo.class)
     })
-    public List<PythonDBCourseInfo> getCourseList() {
+    public List<PHPDBCourseInfo> getCourseList() {
         return courseList;
     }
 
-    public void setCourseList(List<PythonDBCourseInfo> courseList) {
+    public void setCourseList(List<PHPDBCourseInfo> courseList) {
         this.courseList = courseList;
     }
+
 }
