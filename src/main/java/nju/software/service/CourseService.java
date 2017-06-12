@@ -3,6 +3,7 @@ package nju.software.service;
 import nju.software.model.Selection;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ZhangYF on 2017/6/4.
@@ -53,5 +54,19 @@ public interface CourseService {
      * @param institution
      * @return
      */
-    public int getstudentNum(int courseid, int institution);
+    public int getStudentNum(int courseid, int institution);
+
+    /**
+     * 统计院系所有课程的跨院系选课人数
+     * @param intitution
+     * @return 课程id:课程学生数
+     */
+    public Map<Integer,Integer> statisticCourses(int intitution);
+
+    /**
+     * 统计院系所有学生的跨院系选课数
+     * @param intitution
+     * @return 学生id：学生选课数
+     */
+    public Map<Integer,Integer> statisticStudents(int intitution);
 }
