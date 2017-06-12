@@ -1,5 +1,7 @@
 package nju.software.model.pythondb;
 
+import nju.software.model.standard.StandardCourseList;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
@@ -8,13 +10,12 @@ import java.util.List;
  * Created by Anson Shaw on 2017/6/11.
  */
 @XmlRootElement(name = "result")
-public class PythonDBCourseList {
+public class PythonDBCourseList extends StandardCourseList{
 
     private String success;
 
     private String message;
 
-    private List<PythonDBCourseInfo> courses;
 
     public String getSuccess() {
         return success;
@@ -34,12 +35,4 @@ public class PythonDBCourseList {
         this.message = message;
     }
 
-    public List<PythonDBCourseInfo> getCourses() {
-        return courses;
-    }
-
-    @XmlElement(name = "courses")
-    public void setCourses(List<PythonDBCourseInfo> courses) {
-        this.courses = courses;
-    }
 }
