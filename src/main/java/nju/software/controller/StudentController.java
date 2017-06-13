@@ -1,11 +1,15 @@
 package nju.software.controller;
 
+import nju.software.config.ServerConfig;
 import nju.software.model.ResultBean;
 import nju.software.model.Selection;
 import nju.software.model.statistic.CourseInfo;
 import nju.software.model.statistic.ListBean;
+import nju.software.model.statistic.StudentInfo;
 import nju.software.service.CourseService;
+import nju.software.service.StatisticService;
 import nju.software.util.XmlUtil;
+import org.hibernate.type.IntegerType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +31,9 @@ public class StudentController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private StatisticService statisticService;
+
     @RequestMapping(value = "/courses")
     @ResponseBody
     public String getAllCourses(HttpServletRequest request){
@@ -44,23 +51,58 @@ public class StudentController {
 
     @RequestMapping(value = "/courseStatistics")
     @ResponseBody
-    public ListBean getCourseStatistics(HttpServletRequest request) {
-        String idStr = request.getParameter("institutionIds");
-        String[] ids = idStr.split(",");
-        List<CourseInfo> infoList = new LinkedList<>();
-        for (String id : ids) {
-            Map<Integer, Integer> mp = courseService.statisticCourses(Integer.parseInt(id));
-            for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
-
+    public ListBean getCourseStatistics() {
+        List<CourseInfo> remoteStat = statisticService.getCourseStatistics();
+        List<CourseInfo> allStat = new LinkedList<>();
+        List<Integer> institutionIds = ServerConfig.getAllInstitutionIds();
+        for (int institutionId : institutionIds) {
+            Map<Integer, Integer> mp = courseService.statisticCourses(institutionId);
+            for (CourseInfo info : remoteStat) {
+                if (info.getInstitution() == institutionId) {
+                    int courseId = info.getCourseid();
+                    int studentNum = info.getStudentNum();
+                    if (mp.containsKey(courseId)) {
+                        studentNum += mp.get(courseId);
+                    }
+                    allStat.add(new CourseInfo(
+                            courseId, info.getName(),
+                            institutionId, studentNum
+                    ));
+                }
             }
         }
-        return null;
+
+        ListBean result = new ListBean();
+        result.setList(allStat);
+        return result;
     }
 
     @RequestMapping(value = "/studentStatistics")
     @ResponseBody
-    public ListBean getStudentStatistics(HttpServletRequest request) {
-        return null;
+    public ListBean getStudentStatistics() {
+        List<StudentInfo> remoteStat = statisticService.getStudentStatistics();
+        List<StudentInfo> allStat = new LinkedList<>();
+        List<Integer> institutionIds = ServerConfig.getAllInstitutionIds();
+        for (int institutionId : institutionIds) {
+            Map<Integer, Integer> mp = courseService.statisticStudents(institutionId);
+            for (StudentInfo info : remoteStat) {
+                if (info.getInstitution() == institutionId) {
+                    int studentId = info.getStudentid();
+                    int courseNum = info.getCourseNum();
+                    if (mp.containsKey(studentId)) {
+                        courseNum += mp.get(studentId);
+                    }
+                    allStat.add(new StudentInfo(
+                            studentId, info.getName(),
+                            institutionId, courseNum
+                    ));
+                }
+            }
+        }
+
+        ListBean result = new ListBean();
+        result.setList(allStat);
+        return result;
     }
 
     @RequestMapping(value = "/chooseCourse",method = RequestMethod.POST)

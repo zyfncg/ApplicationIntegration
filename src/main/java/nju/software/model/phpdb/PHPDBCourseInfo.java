@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "course")
 public class PHPDBCourseInfo implements CourseStandardized {
+
     private int institutionId;
 
     private int courseId;

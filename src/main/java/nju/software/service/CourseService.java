@@ -1,8 +1,5 @@
 package nju.software.service;
 
-import nju.software.model.Selection;
-
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,13 +7,26 @@ import java.util.Map;
  */
 public interface CourseService {
 
+    /**
+     * 获得出参数院系以外其它院系的所有课程信息
+     * @param institutionId 院系ID
+     * @return 课程信息XML
+     */
     String getAllCourse(int institutionId);
+
+    /**
+     * 根据院系ID和课程ID获得课程名称
+     * @param institutionId 院系ID
+     * @param courseId 课程ID
+     * @return 课程名称
+     */
+    String getCourseNameById(int institutionId, int courseId);
 
     /**
      * 获得跨院系的已选课程
      * @param institutionId
      * @param studentId
-     * @return
+     * @return 课程信息XML
      */
     String getStudyCourse(int institutionId, int studentId);
 

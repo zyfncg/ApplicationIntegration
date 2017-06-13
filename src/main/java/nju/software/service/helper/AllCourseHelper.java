@@ -1,4 +1,4 @@
-package nju.software.service;
+package nju.software.service.helper;
 
 import nju.software.config.ServerConfig;
 import nju.software.model.javadb.JavaDBCourseInfo;
@@ -20,13 +20,13 @@ import java.util.Map;
  *
  * 处理与所有课程信息请求有关的逻辑
  */
-class CourseHelper {
+public class AllCourseHelper {
 
-    private static Map<Integer, CourseXmlExtractor> xmlHandler = new HashMap<>();
+    private static Map<Integer, AllCourseXmlGenerator> handlerMap = new HashMap<>();
 
     static {
-        // 处理来自Java服务器的请求
-        xmlHandler.put(ServerConfig.JAVA_DB_INSTITUTION, () -> {
+        // 处理来自Java服务器的请求,获取其它服务器的全部课程信息
+        handlerMap.put(ServerConfig.JAVA_DB_INSTITUTION, () -> {
             JavaDBCourseList result = new JavaDBCourseList();
             result.setCourseList(new LinkedList<>());
 
@@ -53,8 +53,8 @@ class CourseHelper {
             return XmlUtil.convertToXml(result);
         });
 
-        // 处理来自Python服务器的请求
-        xmlHandler.put(ServerConfig.PYTHON_DB_INSTITUTION, () -> {
+        // 处理来自Python服务器的请求,获取其它服务器的全部课程信息
+        handlerMap.put(ServerConfig.PYTHON_DB_INSTITUTION, () -> {
             PythonDBCourseList result = new PythonDBCourseList();
             result.setCourseList(new LinkedList<>());
 
@@ -81,8 +81,8 @@ class CourseHelper {
             return XmlUtil.convertToXml(result);
         });
 
-        // 处理来自PHP服务器的请求
-        xmlHandler.put(ServerConfig.PHP_DB_INSTITUTION, () -> {
+        // 处理来自PHP服务器的请求,获取其它服务器的全部课程信息
+        handlerMap.put(ServerConfig.PHP_DB_INSTITUTION, () -> {
             PHPDBCourseList result = new PHPDBCourseList();
             result.setCourseList(new LinkedList<>());
 
@@ -110,8 +110,9 @@ class CourseHelper {
         });
     }
 
-    static Map<Integer, CourseXmlExtractor> getHandlerMap() {
-        return xmlHandler;
+    public static Map<Integer, AllCourseXmlGenerator> getHandlerMap() {
+        return handlerMap;
     }
+
 }
 

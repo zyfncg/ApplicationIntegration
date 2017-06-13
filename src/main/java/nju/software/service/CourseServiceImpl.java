@@ -2,11 +2,12 @@ package nju.software.service;
 
 import nju.software.dao.SelectionDao;
 import nju.software.model.Selection;
+import nju.software.model.standard.StandardCourseInfo;
+import nju.software.service.helper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,19 +22,29 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public String getAllCourse(int institutionId) {
-        Map<Integer, CourseXmlExtractor> handlerMap = CourseHelper.getHandlerMap();
+        Map<Integer, AllCourseXmlGenerator> handlerMap = AllCourseHelper.getHandlerMap();
         if (handlerMap.containsKey(institutionId)) {
-            return handlerMap.get(institutionId).extract();
+            return handlerMap.get(institutionId).generate();
         }
         return "没有这个院系ID";
     }
 
     @Override
+    public String getCourseNameById(int institutionId, int courseId) {
+        Map<Integer, SingleCourseXmlExtractor> handlerMap = SingleCourseHelper.getHandlerMap();
+        if (handlerMap.containsKey(institutionId)) {
+            StandardCourseInfo info = handlerMap.get(institutionId).extract(courseId);
+            return info.getName();
+        }
+        return "未知";
+    }
+
+    @Override
     public String getStudyCourse(int institutionId, int studentId) {
         List<Selection> selectionList = selectionDao.findAllByStudentidAndStudentInstitution(studentId,institutionId);
-        Map<Integer, SelectXmlExtractor> handlerMap = SelectHelper.getHandlerMap();
+        Map<Integer, SelectXmlGenerator> handlerMap = SelectHelper.getHandlerMap();
         if (handlerMap.containsKey(institutionId)) {
-            return handlerMap.get(institutionId).extract(selectionList);
+            return handlerMap.get(institutionId).generate(selectionList);
         }
 
         return "此院系ID不存在";

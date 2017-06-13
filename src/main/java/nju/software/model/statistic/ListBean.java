@@ -8,13 +8,13 @@ import java.util.List;
 /**
  * Created by ZhangYF on 2017/6/10.
  */
-@XmlRootElement
+@XmlRootElement (name = "listBean")
 public class ListBean {
     private List list;
 
     @XmlElements({
-            @XmlElement(name = "courseInfo", type = CourseInfo.class),
-            @XmlElement(name = "studentInfo", type = StudentInfo.class)
+            @XmlElement(name = "studentInfo", type = StudentInfo.class),
+            @XmlElement(name = "courseInfo", type = CourseInfo.class)
     })
     public List getList() {
         return list;

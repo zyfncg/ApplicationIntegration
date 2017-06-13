@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by ZhangYF on 2017/6/11.
  */
-@XmlRootElement
+@XmlRootElement (name = "courseInfo")
 public class CourseInfo{
 
     private int courseid;

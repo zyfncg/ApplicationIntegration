@@ -1,4 +1,4 @@
-package nju.software.service;
+package nju.software.service.helper;
 
 import nju.software.config.ServerConfig;
 import nju.software.model.Selection;
@@ -17,9 +17,9 @@ import java.util.*;
  *
  * 处理选课信息请求
  */
-class SelectHelper {
+public class SelectHelper {
 
-    private static Map<Integer, SelectXmlExtractor> xmlHandler = new HashMap<>();
+    private static Map<Integer, SelectXmlGenerator> xmlHandler = new HashMap<>();
 
     static {
         // 处理来自Java服务器的请求
@@ -77,7 +77,6 @@ class SelectHelper {
 
             Map<String, String> phpData = getPHPParam(selections);
             if (phpData != null) {
-                System.out.println(phpData.get("cids"));
                 String phpXml = HttpUtil.post(ServerConfig.PHP_COURSE_URL, phpData);
                 PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
                         phpXml, PHPDBCourseList.class
@@ -128,29 +127,18 @@ class SelectHelper {
         });
     }
 
-    static Map<Integer, SelectXmlExtractor> getHandlerMap() {
+    public static Map<Integer, SelectXmlGenerator> getHandlerMap() {
         return xmlHandler;
     }
 
     private static Map<String, String> getPythonParam(List<Selection> selections) {
-        List<String> ids = new LinkedList<>();
-        for (Selection s : selections) {
-            if (s.getCourseInstitution() == ServerConfig.PYTHON_DB_INSTITUTION) {
-                ids.add(String.valueOf(s.getCourseid()));
-            }
-        }
-        return paramHelper(ids, "courseIds");
+        List<String> ids = extractIds(selections, ServerConfig.PYTHON_DB_INSTITUTION);
+        return paramHelper(ids, ServerConfig.PYTHON_COURSE_REQUEST_KEY);
     }
 
     private static Map<String, String> getPHPParam(List<Selection> selections) {
-        List<String> ids = new LinkedList<>();
-        for (Selection s : selections) {
-            if (s.getCourseInstitution() == ServerConfig.PHP_DB_INSTITUTION) {
-                ids.add(String.valueOf(s.getCourseid()));
-            }
-        }
-
-        Map<String, String> result = paramHelper(ids, "cids");
+        List<String> ids = extractIds(selections, ServerConfig.PHP_DB_INSTITUTION);
+        Map<String, String> result = paramHelper(ids, ServerConfig.PHP_COURSE_REQUEST_KEY);
         if (result != null) {
             result.put("action", "Statistic/coursesInfo");
         }
@@ -158,13 +146,8 @@ class SelectHelper {
     }
 
     private static Map<String, String> getJavaParam(List<Selection> selections) {
-        List<String> ids = new LinkedList<>();
-        for (Selection s : selections) {
-            if (s.getCourseInstitution() == ServerConfig.JAVA_DB_INSTITUTION) {
-                ids.add(String.valueOf(s.getCourseid()));
-            }
-        }
-        return paramHelper(ids, "courseids");
+        List<String> ids = extractIds(selections, ServerConfig.JAVA_DB_INSTITUTION);
+        return paramHelper(ids, ServerConfig.JAVA_COURSE_REQUEST_KEY);
     }
 
     private static Map<String, String> paramHelper(List<String> ids, String key) {
@@ -180,6 +163,16 @@ class SelectHelper {
 
         result.put(key, idStr.substring(0, idStr.length() - 1));
         return result;
+    }
+
+    private static List<String> extractIds(List<Selection> selections, int institutionId) {
+        List<String> ids = new LinkedList<>();
+        for (Selection s : selections) {
+            if (s.getCourseInstitution() == institutionId) {
+                ids.add(String.valueOf(s.getCourseid()));
+            }
+        }
+        return ids;
     }
 }
 

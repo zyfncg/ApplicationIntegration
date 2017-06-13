@@ -1,6 +1,8 @@
 package nju.software.config;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,13 +32,40 @@ public class ServerConfig {
 
     public static final String JAVA_COURSE_URL = JAVA_HOST + "/edu_admin/integration/coursesInfo";
 
-    public static final String PYTHON_COURSE_URL = PYTHON_HOST + "/getCourseByIds";
+    public static final String PYTHON_COURSE_URL = PYTHON_HOST + "/igetCourseByIds";
 
     public static final String PHP_COURSE_URL = PHP_HOST + "/Controller.php";
+
+    public static final String JAVA_COURSE_STAT_URL = JAVA_HOST + "/edu_admin/integration/statisticCourses";
+
+    public static final String PYTHON_COURSE_STAT_URL = PYTHON_HOST + "/getCourseStatistics";
+
+    public static final String PHP_COURSE_STAT_URL = PHP_HOST + "/CoursesStatistic.php";
+
+    public static final String JAVA_STUDENT_STAT_URL = JAVA_HOST + "/edu_admin/integration/statisticStudents";
+
+    public static final String PYTHON_STUDENT_STAT_URL = PYTHON_HOST + "/getStudentStatistics";
+
+    public static final String PHP_STUDENT_STAT_URL = PHP_HOST + "/StudentsStatistic.php";
+
 
     // 向PHP服务请求所有课程信息的参数
     public static Map<String, String> phpAllCourseParam = new HashMap<>();
     static {
         phpAllCourseParam.put("action", "Statistic/course_stat");
+    }
+
+    public static final String JAVA_COURSE_REQUEST_KEY = "courseids";
+
+    public static final String PYTHON_COURSE_REQUEST_KEY = "courseIds";
+
+    public static final String PHP_COURSE_REQUEST_KEY = "cids";
+
+    public static List<Integer> getAllInstitutionIds() {
+        List<Integer> ids = new LinkedList<>();
+        ids.add(JAVA_DB_INSTITUTION);
+        ids.add(PYTHON_DB_INSTITUTION);
+        ids.add(PHP_DB_INSTITUTION);
+        return ids;
     }
 }
