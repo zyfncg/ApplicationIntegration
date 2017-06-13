@@ -14,7 +14,7 @@ public class QuitCourseTest {
 
     public static void main(String[] args) {
         // URL
-        String quitURL = "http://localhost:8088/student/dropCourse";
+        String quitURL = "http://localhost:8080/student/dropCourse";
 
         // Java选Python
         Map<String, String> javaData = new HashMap<>();
