@@ -53,7 +53,10 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public boolean addCourse(int institutionId, int studentId, int courseInstitution, int courseId) {
         Selection selection = new Selection(studentId,institutionId,courseId,courseInstitution);
-        selectionDao.save(selection);
+        if(selectionDao.findByStudentidAndStudentInstitutionAndCourseidAndCourseInstitution(
+                studentId, institutionId,courseId,courseInstitution)==null){
+            selectionDao.save(selection);
+        }
         return true;
     }
 
@@ -61,7 +64,9 @@ public class CourseServiceImpl implements CourseService{
     public boolean deleteCourse(int institutionId, int studentId, int courseInstitution, int courseId) {
         Selection selection = selectionDao.findByStudentidAndStudentInstitutionAndCourseidAndCourseInstitution
                 (studentId,institutionId,courseId,courseInstitution);
-        selectionDao.delete(selection);
+        if(selection != null){
+            selectionDao.delete(selection);
+        }
         return true;
     }
 
