@@ -31,14 +31,9 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public String getStudyCourse(int institutionId, int studentId) {
         List<Selection> selectionList = selectionDao.findAllByStudentidAndStudentInstitution(studentId,institutionId);
-        List<String> courseIds = new LinkedList<>();
-        for (Selection s : selectionList) {
-            courseIds.add(String.valueOf(s.getCourseid()));
-        }
-
         Map<Integer, SelectXmlExtractor> handlerMap = SelectHelper.getHandlerMap();
         if (handlerMap.containsKey(institutionId)) {
-            return handlerMap.get(institutionId).extract(courseIds);
+            return handlerMap.get(institutionId).extract(selectionList);
         }
 
         return "此院系ID不存在";

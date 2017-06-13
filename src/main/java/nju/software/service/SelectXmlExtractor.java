@@ -1,5 +1,7 @@
 package nju.software.service;
 
+import nju.software.model.Selection;
+
 import java.util.List;
 
 /**
@@ -7,5 +9,5 @@ import java.util.List;
  */
 interface SelectXmlExtractor {
 
-    String extract(List<String> ids);
+    String extract(List<Selection> selections);
 }

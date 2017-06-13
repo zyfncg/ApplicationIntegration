@@ -34,16 +34,20 @@ class CourseHelper {
             PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
                     pythonXml, PythonDBCourseResult.class
             );
-            for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
-                result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+            if (pyList != null && pyList.getList() != null) {
+                for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
+                    result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+                }
             }
 
             String phpXml = HttpUtil.post(ServerConfig.PHP_ALL_COURSE_URL, ServerConfig.phpAllCourseParam);
             PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
                     phpXml, PHPDBCourseList.class
             );
-            for (PHPDBCourseInfo info : phpList.getCourseList()) {
-                result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+            if (pyList != null) {
+                for (PHPDBCourseInfo info : phpList.getCourseList()) {
+                    result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+                }
             }
 
             return XmlUtil.convertToXml(result);
@@ -58,16 +62,20 @@ class CourseHelper {
             JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
                     javaXml, JavaDBCourseList.class
             );
-            for (JavaDBCourseInfo info : javaList.getCourseList()) {
-                result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+            if (javaList != null) {
+                for (JavaDBCourseInfo info : javaList.getCourseList()) {
+                    result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+                }
             }
 
             String phpXml = HttpUtil.post(ServerConfig.PHP_ALL_COURSE_URL, ServerConfig.phpAllCourseParam);
             PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
                     phpXml, PHPDBCourseList.class
             );
-            for (PHPDBCourseInfo info : phpList.getCourseList()) {
-                result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+            if (phpList != null) {
+                for (PHPDBCourseInfo info : phpList.getCourseList()) {
+                    result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+                }
             }
 
             return XmlUtil.convertToXml(result);
@@ -82,16 +90,20 @@ class CourseHelper {
             PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
                     pythonXml, PythonDBCourseResult.class
             );
-            for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
-                result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+            if (pyList != null && pyList.getList() != null) {
+                for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
+                    result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+                }
             }
 
             String javaXml = HttpUtil.post(ServerConfig.JAVA_ALL_COURSE_URL, null);
             JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
                     javaXml, JavaDBCourseList.class
             );
-            for (JavaDBCourseInfo info : javaList.getCourseList()) {
-                result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+            if (javaList != null) {
+                for (JavaDBCourseInfo info : javaList.getCourseList()) {
+                    result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+                }
             }
 
             return XmlUtil.convertToXml(result);
