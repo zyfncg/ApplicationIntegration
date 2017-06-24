@@ -30,24 +30,36 @@ public class AllCourseHelper {
             JavaDBCourseList result = new JavaDBCourseList();
             result.setCourseList(new LinkedList<>());
 
-            String pythonXml = HttpUtil.post(ServerConfig.PYTHON_ALL_COURSE_URL, null);
-            PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
-                    pythonXml, PythonDBCourseResult.class
-            );
-            if (pyList != null && pyList.getList() != null) {
-                for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
-                    result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+            try {
+                String pythonXml = HttpUtil.post(ServerConfig.PYTHON_ALL_COURSE_URL, null);
+                PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
+                        pythonXml, PythonDBCourseResult.class
+                );
+                if (pyList != null && pyList.getList() != null) {
+                    for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
+                        result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+                    }
                 }
             }
+            catch (Exception e) {
+                System.out.println("从Python服务器获得课程信息出错");
+                e.printStackTrace();
+            }
 
-            String phpXml = HttpUtil.post(ServerConfig.PHP_ALL_COURSE_URL, ServerConfig.phpAllCourseParam);
-            PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
-                    phpXml, PHPDBCourseList.class
-            );
-            if (pyList != null) {
-                for (PHPDBCourseInfo info : phpList.getCourseList()) {
-                    result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+            try {
+                String phpXml = HttpUtil.post(ServerConfig.PHP_ALL_COURSE_URL, ServerConfig.phpAllCourseParam);
+                PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
+                        phpXml, PHPDBCourseList.class
+                );
+                if (phpList != null) {
+                    for (PHPDBCourseInfo info : phpList.getCourseList()) {
+                        result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
+                    }
                 }
+            }
+            catch (Exception e) {
+                System.out.println("从PHP服务器获得课程信息出错");
+                e.printStackTrace();
             }
 
             return XmlUtil.convertToXml(result);
@@ -58,24 +70,36 @@ public class AllCourseHelper {
             PythonDBCourseList result = new PythonDBCourseList();
             result.setCourseList(new LinkedList<>());
 
-            String javaXml = HttpUtil.post(ServerConfig.JAVA_ALL_COURSE_URL, null);
-            JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
-                    javaXml, JavaDBCourseList.class
-            );
-            if (javaList != null) {
-                for (JavaDBCourseInfo info : javaList.getCourseList()) {
-                    result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+            try {
+                String javaXml = HttpUtil.post(ServerConfig.JAVA_ALL_COURSE_URL, null);
+                JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
+                        javaXml, JavaDBCourseList.class
+                );
+                if (javaList != null) {
+                    for (JavaDBCourseInfo info : javaList.getCourseList()) {
+                        result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+                    }
                 }
             }
+            catch (Exception e) {
+                System.out.println("从Java服务器获得课程信息出错");
+                e.printStackTrace();
+            }
 
-            String phpXml = HttpUtil.post(ServerConfig.PHP_ALL_COURSE_URL, ServerConfig.phpAllCourseParam);
-            PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
-                    phpXml, PHPDBCourseList.class
-            );
-            if (phpList != null) {
-                for (PHPDBCourseInfo info : phpList.getCourseList()) {
-                    result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+            try {
+                String phpXml = HttpUtil.post(ServerConfig.PHP_ALL_COURSE_URL, ServerConfig.phpAllCourseParam);
+                PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
+                        phpXml, PHPDBCourseList.class
+                );
+                if (phpList != null) {
+                    for (PHPDBCourseInfo info : phpList.getCourseList()) {
+                        result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
+                    }
                 }
+            }
+            catch (Exception e) {
+                System.out.println("从PHP服务器获得课程信息出错");
+                e.printStackTrace();
             }
 
             return XmlUtil.convertToXml(result);
@@ -86,24 +110,36 @@ public class AllCourseHelper {
             PHPDBCourseList result = new PHPDBCourseList();
             result.setCourseList(new LinkedList<>());
 
-            String pythonXml = HttpUtil.post(ServerConfig.PYTHON_ALL_COURSE_URL, null);
-            PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
-                    pythonXml, PythonDBCourseResult.class
-            );
-            if (pyList != null && pyList.getList() != null) {
-                for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
-                    result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+            try {
+                String pythonXml = HttpUtil.post(ServerConfig.PYTHON_ALL_COURSE_URL, null);
+                PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
+                        pythonXml, PythonDBCourseResult.class
+                );
+                if (pyList != null && pyList.getList() != null) {
+                    for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
+                        result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+                    }
                 }
             }
+            catch (Exception e) {
+                System.out.println("从Python服务器获得课程信息出错");
+                e.printStackTrace();
+            }
 
-            String javaXml = HttpUtil.post(ServerConfig.JAVA_ALL_COURSE_URL, null);
-            JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
-                    javaXml, JavaDBCourseList.class
-            );
-            if (javaList != null) {
-                for (JavaDBCourseInfo info : javaList.getCourseList()) {
-                    result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+            try {
+                String javaXml = HttpUtil.post(ServerConfig.JAVA_ALL_COURSE_URL, null);
+                JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
+                        javaXml, JavaDBCourseList.class
+                );
+                if (javaList != null) {
+                    for (JavaDBCourseInfo info : javaList.getCourseList()) {
+                        result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
+                    }
                 }
+            }
+            catch (Exception e) {
+                System.out.println("从Java服务器获得课程信息出错");
+                e.printStackTrace();
             }
 
             return XmlUtil.convertToXml(result);
