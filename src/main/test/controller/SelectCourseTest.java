@@ -16,7 +16,7 @@ public class SelectCourseTest {
 
     public static void main(String[] args) {
         // URL
-        String chooseURL = "http://localhost:8088/student/chooseCourse";
+        String chooseURL = "http://localhost:8080/student/chooseCourse";
 
         // Java选Python
         Map<String, String> javaData = new HashMap<>();

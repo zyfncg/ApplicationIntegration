@@ -52,11 +52,14 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public boolean addCourse(int institutionId, int studentId, int courseInstitution, int courseId) {
-        Selection selection = new Selection(studentId,institutionId,courseId,courseInstitution);
+
         if(selectionDao.findByStudentidAndStudentInstitutionAndCourseidAndCourseInstitution(
                 studentId, institutionId,courseId,courseInstitution)==null){
+            Selection selection = new Selection(studentId,institutionId,courseId,courseInstitution);
             selectionDao.save(selection);
+//            System.out.println("Item not existed");
         }
+        System.out.println(studentId);
         return true;
     }
 
