@@ -47,12 +47,12 @@ public class StatisticsHelper {
 //        System.out.println(xml);
 //        System.out.println("------------------------------");
         ListBean bean = XmlUtil.converyToJavaBean(xml, ListBean.class);
-        if (bean.getList().get(0) instanceof StudentInfo) {
-            System.out.println("Student List");
-        }
-        if (bean.getList().get(0) instanceof CourseInfo) {
-            System.out.println("Course List");
-        }
+//        if (bean.getList().get(0) instanceof StudentInfo) {
+//            System.out.println("Student List");
+//        }
+//        if (bean.getList().get(0) instanceof CourseInfo) {
+//            System.out.println("Course List");
+//        }
         return bean.getList();
     }
 }
