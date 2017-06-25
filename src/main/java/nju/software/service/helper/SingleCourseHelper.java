@@ -42,12 +42,19 @@ public class SingleCourseHelper {
     }
 
     private static StandardCourseInfo getCourseInfo(String url, String key, int courseId) {
-        Map<String, String> data = new HashMap<>();
-        data.put(key, String.valueOf(courseId));
-        String xml = HttpUtil.post(url, data);
-        return XmlUtil.converyToJavaBean(
-                xml, StandardCourseInfo.class
-        );
+        try {
+            Map<String, String> data = new HashMap<>();
+            data.put(key, String.valueOf(courseId));
+            String xml = HttpUtil.post(url, data);
+            return XmlUtil.converyToJavaBean(
+                    xml, StandardCourseInfo.class
+            );
+        }
+        catch (Exception e) {
+            System.out.println("获得课程信息出错");
+            e.printStackTrace();
+            return new StandardCourseInfo();
+        }
     }
 
     public static Map<Integer, SingleCourseXmlExtractor> getHandlerMap() {
