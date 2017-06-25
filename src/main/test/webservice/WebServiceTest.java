@@ -1,9 +1,6 @@
 package webservice;
 
-import org.apache.axiom.om.OMAbstractFactory;
-import org.apache.axiom.om.OMElement;
-import org.apache.axiom.om.OMFactory;
-import org.apache.axiom.om.OMNamespace;
+import org.apache.axiom.om.*;
 import org.apache.axis2.addressing.EndpointReference;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
@@ -26,9 +23,13 @@ public class WebServiceTest {
         OMNamespace namespace = factory.createOMNamespace("edu.nju.software.education.soap", "");
         OMElement method = factory.createOMElement("getCourseStatistics", namespace);
         method.build();
+        System.out.println(client.sendReceive(method));
 
-        OMElement result = client.sendReceive(method);
-        System.out.println(result);
-        System.out.println("done");
+        OMElement method1 = factory.createOMElement("getCourseByIds", namespace);
+        OMElement param1 = factory.createOMElement("idStr", namespace);
+        param1.addChild(factory.createOMText(param1, "1,2,3"));
+        method1.addChild(param1);
+        method1.build();
+        System.out.println(client.sendReceive(method1));
     }
 }
