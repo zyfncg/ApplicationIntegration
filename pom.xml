@@ -11,6 +11,7 @@
   <properties>
     <spring.version>4.3.6.RELEASE</spring.version>
     <hibernate.version>5.2.10.Final</hibernate.version>
+    <cxf.version>3.1.11</cxf.version>
   </properties>
 
   <dependencies>
@@ -128,6 +129,21 @@
       <version>2.4</version>
     </dependency>
 
+    <dependency>
+      <groupId>wsdl4j</groupId>
+      <artifactId>wsdl4j</artifactId>
+      <version>1.6.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
 
   </dependencies>
   <build>
