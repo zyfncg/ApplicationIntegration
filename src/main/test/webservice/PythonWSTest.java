@@ -1,10 +1,14 @@
 package webservice;
 
 import nju.software.config.ServerConfig;
+import nju.software.model.statistic.CourseInfo;
+import nju.software.model.statistic.StudentInfo;
+import nju.software.service.webservice.StatisticsWebService;
 import nju.software.util.WebServiceUtil;
 import org.apache.axis2.AxisFault;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +18,7 @@ import java.util.Map;
  */
 public class PythonWSTest {
 
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) throws AxisFault {
         System.out.println(WebServiceUtil.invokePython(
                 ServerConfig.PYTHON_TARGET_NAMESPACE,
@@ -23,7 +28,7 @@ public class PythonWSTest {
 
         System.out.println(WebServiceUtil.invokePython(
                 ServerConfig.PYTHON_TARGET_NAMESPACE,
-                ServerConfig.PYTHON_WS_STUDENT_URL,
+                ServerConfig.PYTHON_WS_STUDENT_STAT_URL,
                 null
         ));
 
@@ -40,5 +45,15 @@ public class PythonWSTest {
                 ServerConfig.PYTHON_WS_COURSE_BY_ID_URL,
                 param
         ));
+
+        List<CourseInfo> courseStat = StatisticsWebService.getCourseStatistics().getList();
+        for (CourseInfo info : courseStat) {
+            System.out.println(info.getName());
+        }
+
+        List<StudentInfo> studentStat = StatisticsWebService.getStudentStatistics().getList();
+        for (StudentInfo info : studentStat) {
+            System.out.println(info.getName());
+        }
     }
 }

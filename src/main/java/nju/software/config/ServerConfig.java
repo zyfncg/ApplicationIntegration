@@ -132,8 +132,8 @@ public class ServerConfig {
             properties.get("python_ws_course_stat_url")
     );
 
-    public static final String PYTHON_WS_STUDENT_URL = String.valueOf(
-            properties.get("python_ws_student_url")
+    public static final String PYTHON_WS_STUDENT_STAT_URL = String.valueOf(
+            properties.get("python_ws_student_stat_url")
     );
 
     public static final String PYTHON_WS_ALL_COURSE_URL = String.valueOf(
