@@ -5,6 +5,7 @@ import nju.software.model.statistic.CourseInfo;
 import nju.software.model.statistic.ListBean;
 import nju.software.model.statistic.StudentInfo;
 import nju.software.util.WebServiceUtil;
+import nju.software.util.XmlUtil;
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.databinding.utils.BeanUtil;
 import org.apache.axis2.engine.DefaultObjectSupplier;
@@ -26,10 +27,13 @@ public class StatisticsWebService {
 
         // 从Python Web Service服务器获得课程统计信息
         try {
-            OMElement data = WebServiceUtil.invokePython(
-                    ServerConfig.PYTHON_TARGET_NAMESPACE,
-                    ServerConfig.PYTHON_WS_COURSE_STAT_URL,
-                    null
+            OMElement data = WebServiceUtil.invoke(
+                    WebServiceUtil.pythonClient,
+                    WebServiceUtil.crateMethodElement(
+                            ServerConfig.PYTHON_TARGET_NAMESPACE,
+                            ServerConfig.PYTHON_WS_COURSE_STAT_URL,
+                            null
+                    )
             );
 
             Iterator itr = data.getFirstElement().getChildElements();
@@ -44,6 +48,28 @@ public class StatisticsWebService {
             System.out.println("从Python Web Service服务器获得课程统计信息失败");
             e.printStackTrace();
         }
+
+        // 从Java Web Service服务器获得课程统计信息
+        try {
+            OMElement data = WebServiceUtil.invoke(
+                    WebServiceUtil.javaClient,
+                    WebServiceUtil.crateMethodElement(
+                            ServerConfig.JAVA_TARGET_NAMESPACE,
+                            ServerConfig.JAVA_WS_COURSE_STAT_URL,
+                            null
+                    )
+            );
+
+            ListBean list = XmlUtil.converyToJavaBean(
+                    data.getFirstElement().getText(),
+                    ListBean.class
+            );
+            result.getList().addAll(list.getList());
+        } catch (Exception e) {
+            System.out.println("Java Web Service服务器获得课程统计信息失败");
+            e.printStackTrace();
+        }
+
         return result;
     }
 
@@ -54,10 +80,13 @@ public class StatisticsWebService {
 
         // 从Python Web Service服务器获得学生统计信息
         try {
-            OMElement data = WebServiceUtil.invokePython(
-                    ServerConfig.PYTHON_TARGET_NAMESPACE,
-                    ServerConfig.PYTHON_WS_STUDENT_STAT_URL,
-                    null
+            OMElement data = WebServiceUtil.invoke(
+                    WebServiceUtil.pythonClient,
+                    WebServiceUtil.crateMethodElement(
+                            ServerConfig.PYTHON_TARGET_NAMESPACE,
+                            ServerConfig.PYTHON_WS_STUDENT_STAT_URL,
+                            null
+                    )
             );
 
             Iterator itr = data.getFirstElement().getChildElements();
@@ -69,9 +98,32 @@ public class StatisticsWebService {
                 result.getList().add(info);
             }
         } catch (Exception e) {
-            System.out.println("从Python Web Service服务器获得课程统计信息失败");
+            System.out.println("从Python Web Service服务器获得学生统计信息失败");
             e.printStackTrace();
         }
+
+        // 从Java Web Service服务器获得学生统计信息
+        try {
+            OMElement data = WebServiceUtil.invoke(
+                    WebServiceUtil.javaClient,
+                    WebServiceUtil.crateMethodElement(
+                            ServerConfig.JAVA_TARGET_NAMESPACE,
+                            ServerConfig.JAVA_WS_STUDENT_STAT_URL,
+                            null
+                    )
+            );
+
+            ListBean list = XmlUtil.converyToJavaBean(
+                    data.getFirstElement().getText(),
+                    ListBean.class
+            );
+            result.getList().addAll(list.getList());
+        } catch (Exception e) {
+            System.out.println("Java Web Service服务器获得学生统计信息失败");
+            e.printStackTrace();
+        }
+
         return result;
     }
+
 }

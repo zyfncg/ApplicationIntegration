@@ -41,9 +41,9 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public String getStudyCourse(int institutionId, int studentId) {
-        List<Selection> selectionList = selectionDao.findAllByStudentidAndStudentInstitution(studentId,institutionId);
         Map<Integer, SelectXmlGenerator> handlerMap = SelectHelper.getHandlerMap();
         if (handlerMap.containsKey(institutionId)) {
+            List<Selection> selectionList = selectionDao.findAllByStudentidAndStudentInstitution(studentId,institutionId);
             return handlerMap.get(institutionId).generate(selectionList);
         }
 

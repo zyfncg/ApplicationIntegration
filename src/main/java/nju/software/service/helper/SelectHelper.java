@@ -2,15 +2,17 @@ package nju.software.service.helper;
 
 import nju.software.config.ServerConfig;
 import nju.software.model.Selection;
-import nju.software.model.javadb.JavaDBCourseInfo;
 import nju.software.model.javadb.JavaDBCourseList;
-import nju.software.model.phpdb.PHPDBCourseInfo;
 import nju.software.model.phpdb.PHPDBCourseList;
-import nju.software.model.pythondb.*;
+import nju.software.model.pythondb.PythonDBCourseList;
+import nju.software.model.pythondb.PythonDBCourseResult;
 import nju.software.util.HttpUtil;
 import nju.software.util.XmlUtil;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Anson Shaw on 2017/6/12.
@@ -27,44 +29,13 @@ public class SelectHelper {
             JavaDBCourseList result = new JavaDBCourseList();
             result.setCourseList(new LinkedList<>());
 
-            Map<String, String> pyData = getPythonParam(selections);
-            if (pyData != null) {
-                try {
-                    String pythonXml = HttpUtil.post(ServerConfig.PYTHON_COURSE_URL, pyData);
-                    PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
-                            pythonXml, PythonDBCourseResult.class
-                    );
-                    if (pyList != null && pyList.getList() != null
-                            && pyList.getList().getCourseList() != null) {
-                        for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
-                            result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
-                        }
-                    }
-                }
-                catch (Exception e) {
-                    System.out.println("从Python服务器获得课程信息出错");
-                    e.printStackTrace();
-                }
-            }
+            result.getCourseList().addAll(
+                    getPythonSelectList(selections).toStandard().toJavaList().getCourseList()
+            );
 
-            Map<String, String> phpData = getPHPParam(selections);
-            if (phpData != null) {
-                try {
-                    String phpXml = HttpUtil.post(ServerConfig.PHP_COURSE_URL, phpData);
-                    PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
-                            phpXml, PHPDBCourseList.class
-                    );
-                    if (phpList != null && phpList.getCourseList() != null) {
-                        for (PHPDBCourseInfo info : phpList.getCourseList()) {
-                            result.getCourseList().add(info.toStandard().toJavaDBCourseInfo());
-                        }
-                    }
-                }
-                catch (Exception e) {
-                    System.out.println("从PHP服务器获得课程信息出错");
-                    e.printStackTrace();
-                }
-            }
+            result.getCourseList().addAll(
+                    getPHPSelectList(selections).toStandard().toJavaList().getCourseList()
+            );
 
             return XmlUtil.convertToXml(result);
         });
@@ -74,43 +45,13 @@ public class SelectHelper {
             PythonDBCourseList result = new PythonDBCourseList();
             result.setCourseList(new LinkedList<>());
 
-            Map<String, String> javaData = getJavaParam(selections);
-            if (javaData != null) {
-                try {
-                    String javaXml = HttpUtil.post(ServerConfig.JAVA_COURSE_URL, javaData);
-                    JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
-                            javaXml, JavaDBCourseList.class
-                    );
-                    if (javaList != null && javaList.getCourseList() != null) {
-                        for (JavaDBCourseInfo info : javaList.getCourseList()) {
-                            result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
-                        }
-                    }
-                }
-                catch (Exception e) {
-                    System.out.println("从Java服务器获得课程信息出错");
-                    e.printStackTrace();
-                }
-            }
+            result.getCourseList().addAll(
+                    getJavaSelectList(selections).toStandard().toPythonList().getCourseList()
+            );
 
-            Map<String, String> phpData = getPHPParam(selections);
-            if (phpData != null) {
-                try {
-                    String phpXml = HttpUtil.post(ServerConfig.PHP_COURSE_URL, phpData);
-                    PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
-                            phpXml, PHPDBCourseList.class
-                    );
-                    if (phpList != null && phpList.getCourseList() != null) {
-                        for (PHPDBCourseInfo info : phpList.getCourseList()) {
-                            result.getCourseList().add(info.toStandard().toPythonDBCourseInfo());
-                        }
-                    }
-                }
-                catch (Exception e) {
-                    System.out.println("从PHP服务器获得课程信息出错");
-                    e.printStackTrace();
-                }
-            }
+            result.getCourseList().addAll(
+                    getPHPSelectList(selections).toStandard().toPythonList().getCourseList()
+            );
 
             return XmlUtil.convertToXml(result);
         });
@@ -120,44 +61,13 @@ public class SelectHelper {
             PHPDBCourseList result = new PHPDBCourseList();
             result.setCourseList(new LinkedList<>());
 
-            Map<String, String> pyData = getPythonParam(selections);
-            if (pyData != null) {
-                try {
-                    String pythonXml = HttpUtil.post(ServerConfig.PYTHON_COURSE_URL, pyData);
-                    PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
-                            pythonXml, PythonDBCourseResult.class
-                    );
-                    if (pyList != null && pyList.getList() != null
-                            && pyList.getList().getCourseList() != null) {
-                        for (PythonDBCourseInfo info : pyList.getList().getCourseList()) {
-                            result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
-                        }
-                    }
-                }
-                catch (Exception e) {
-                    System.out.println("从python服务器获得课程信息出错");
-                    e.printStackTrace();
-                }
-            }
+            result.getCourseList().addAll(
+                    getPythonSelectList(selections).toStandard().toPHPList().getCourseList()
+            );
 
-            Map<String, String> javaData = getJavaParam(selections);
-            if (javaData != null) {
-                try {
-                    String javaXml = HttpUtil.post(ServerConfig.JAVA_COURSE_URL, javaData);
-                    JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
-                            javaXml, JavaDBCourseList.class
-                    );
-                    if (javaList != null && javaList.getCourseList() != null) {
-                        for (JavaDBCourseInfo info : javaList.getCourseList()) {
-                            result.getCourseList().add(info.toStandard().toPHPDBCourseInfo());
-                        }
-                    }
-                }
-                catch (Exception e) {
-                    System.out.println("从Java服务器获得课程信息出错");
-                    e.printStackTrace();
-                }
-            }
+            result.getCourseList().addAll(
+                    getJavaSelectList(selections).toStandard().toPHPList().getCourseList()
+            );
 
             return XmlUtil.convertToXml(result);
         });
@@ -167,23 +77,108 @@ public class SelectHelper {
         return xmlHandler;
     }
 
-    private static Map<String, String> getPythonParam(List<Selection> selections) {
-        List<String> ids = extractIds(selections, ServerConfig.PYTHON_DB_INSTITUTION);
-        return paramHelper(ids, ServerConfig.PYTHON_COURSE_REQUEST_KEY);
+    private static PythonDBCourseList getPythonSelectList(List<Selection> selections) {
+        PythonDBCourseList result = new PythonDBCourseList();
+        result.setCourseList(new LinkedList<>());
+
+        Map<String, String> pyData = getPythonParam(
+                selections, ServerConfig.PYTHON_COURSE_REQUEST_KEY
+        );
+        if (pyData != null) {
+            try {
+                String pythonXml = HttpUtil.post(ServerConfig.PYTHON_COURSE_URL, pyData);
+                PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
+                        pythonXml, PythonDBCourseResult.class
+                );
+                if (pyList != null && pyList.getList() != null
+                        && pyList.getList().getCourseList() != null) {
+                    return pyList.getList();
+                }
+            }
+            catch (Exception e) {
+                System.out.println("从python服务器获得课程信息出错");
+                e.printStackTrace();
+            }
+        }
+
+        return result;
     }
 
-    private static Map<String, String> getPHPParam(List<Selection> selections) {
+    private static JavaDBCourseList getJavaSelectList(List<Selection> selections) {
+        JavaDBCourseList result = new JavaDBCourseList();
+        result.setCourseList(new LinkedList<>());
+
+        Map<String, String> javaData = getJavaParam(
+                selections, ServerConfig.JAVA_COURSE_REQUEST_KEY
+        );
+        if (javaData != null) {
+            try {
+                String javaXml = HttpUtil.post(ServerConfig.JAVA_COURSE_URL, javaData);
+                JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
+                        javaXml, JavaDBCourseList.class
+                );
+                if (javaList != null && javaList.getCourseList() != null) {
+                    return javaList;
+                }
+            }
+            catch (Exception e) {
+                System.out.println("从Java服务器获得课程信息出错");
+                e.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
+    private static PHPDBCourseList getPHPSelectList(List<Selection> selections) {
+        PHPDBCourseList result = new PHPDBCourseList();
+        result.setCourseList(new LinkedList<>());
+
+        Map<String, String> phpData = getPHPParam(
+                selections, ServerConfig.PHP_COURSE_REQUEST_KEY
+        );
+        if (phpData != null) {
+            try {
+                String phpXml = HttpUtil.post(ServerConfig.PHP_COURSE_URL, phpData);
+                PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
+                        phpXml, PHPDBCourseList.class
+                );
+                if (phpList != null && phpList.getCourseList() != null) {
+                    return phpList;
+                }
+            }
+            catch (Exception e) {
+                System.out.println("从PHP服务器获得课程信息出错");
+                e.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
+    public static Map<String, String> getPythonParam(
+            List<Selection> selections, String requestKey
+    ) {
+        List<String> ids = extractIds(selections, ServerConfig.PYTHON_DB_INSTITUTION);
+        return paramHelper(ids, requestKey);
+    }
+
+    private static Map<String, String> getPHPParam(
+            List<Selection> selections, String requestKey
+    ) {
         List<String> ids = extractIds(selections, ServerConfig.PHP_DB_INSTITUTION);
-        Map<String, String> result = paramHelper(ids, ServerConfig.PHP_COURSE_REQUEST_KEY);
+        Map<String, String> result = paramHelper(ids, requestKey);
         if (result != null) {
             result.put("action", "Statistic/coursesInfo");
         }
         return result;
     }
 
-    private static Map<String, String> getJavaParam(List<Selection> selections) {
+    public static Map<String, String> getJavaParam(
+            List<Selection> selections, String requestKey
+    ) {
         List<String> ids = extractIds(selections, ServerConfig.JAVA_DB_INSTITUTION);
-        return paramHelper(ids, ServerConfig.JAVA_COURSE_REQUEST_KEY);
+        return paramHelper(ids, requestKey);
     }
 
     private static Map<String, String> paramHelper(List<String> ids, String key) {

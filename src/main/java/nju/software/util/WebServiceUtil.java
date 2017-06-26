@@ -19,20 +19,19 @@ import java.util.Map;
  */
 public class WebServiceUtil {
 
-    private static ServiceClient pythonClient = initClient(ServerConfig.PYTHON_WSDL_URL);
+    public static final ServiceClient pythonClient = initClient(ServerConfig.PYTHON_WSDL_URL);
+
+    public static final ServiceClient javaClient = initClient(ServerConfig.JAVA_WSDL_URL);
 
     /**
      *
-     * @param tns 目标命名空间字符串
-     * @param methodName 远程方法名称
+     * @param method 调用方法对象
      * @return 数据XML封装对象
      * @throws AxisFault 远程调用失败异常
      */
-    public static OMElement invokePython(
-            String tns, String methodName, Map<String, String> params) throws AxisFault {
-        OMElement method = crateMethodElement(tns, methodName, params);
+    public static OMElement invoke(ServiceClient client, OMElement method) throws AxisFault {
         method.build();
-        return pythonClient.sendReceive(method);
+        return client.sendReceive(method);
     }
 
     private static ServiceClient initClient(String wsdl) {
@@ -49,7 +48,7 @@ public class WebServiceUtil {
         return client;
     }
 
-    private static OMElement crateMethodElement(
+    public static OMElement crateMethodElement(
             String tns, String methodName, Map<String, String> params) {
         OMFactory factory = OMAbstractFactory.getOMFactory();
         OMNamespace namespace = factory.createOMNamespace(tns, "");

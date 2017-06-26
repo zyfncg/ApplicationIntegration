@@ -128,6 +128,10 @@ public class ServerConfig {
             properties.get("python_target_namespace")
     );
 
+    public static final String PYTHON_WS_COURSE_REQUEST_KEY = String.valueOf(
+            properties.get("python_ws_course_request_key")
+    );
+
     public static final String PYTHON_WS_COURSE_STAT_URL = String.valueOf(
             properties.get("python_ws_course_stat_url")
     );
@@ -142,6 +146,38 @@ public class ServerConfig {
 
     public static final String PYTHON_WS_COURSE_BY_ID_URL = String.valueOf(
             properties.get("python_ws_course_by_id_url")
+    );
+
+    private static final String JAVA_WS_HOST = String.valueOf(
+            properties.get("java_ws_host")
+    );
+
+    public static final String JAVA_WSDL_URL = JAVA_WS_HOST + String.valueOf(
+            properties.get("java_wsdl_url")
+    );
+
+    public static final String JAVA_TARGET_NAMESPACE = String.valueOf(
+            properties.get("java_target_namespace")
+    );
+
+    public static final String JAVA_WS_COURSE_REQUEST_KEY = String.valueOf(
+            properties.get("java_ws_course_request_key")
+    );
+
+    public static final String JAVA_WS_COURSE_STAT_URL = String.valueOf(
+            properties.get("java_ws_course_stat_url")
+    );
+
+    public static final String JAVA_WS_STUDENT_STAT_URL = String.valueOf(
+            properties.get("java_ws_student_stat_url")
+    );
+
+    public static final String JAVA_WS_ALL_COURSE_URL = String.valueOf(
+            properties.get("java_ws_all_course_url")
+    );
+
+    public static final String JAVA_WS_COURSE_BY_ID_URL = String.valueOf(
+            properties.get("java_ws_course_by_id_url")
     );
 
     public static List<Integer> getAllInstitutionIds() {

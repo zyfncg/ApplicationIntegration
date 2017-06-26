@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * Created by Anson Shaw on 2017/6/13.
+ *
+ * 从其它服务器获得统计信息
  */
 public class StatisticsHelper {
 
@@ -81,6 +83,7 @@ public class StatisticsHelper {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     private static<T> List<T> getStatistics(String url) {
         String xml = HttpUtil.post(url, null);
         ListBean bean = XmlUtil.converyToJavaBean(xml, ListBean.class);
