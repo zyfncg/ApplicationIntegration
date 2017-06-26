@@ -84,7 +84,7 @@ public class SelectHelper {
         Map<String, String> pyData = getPythonParam(
                 selections, ServerConfig.PYTHON_COURSE_REQUEST_KEY
         );
-        if (pyData != null) {
+        if (pyData.containsKey(ServerConfig.PYTHON_COURSE_REQUEST_KEY)) {
             try {
                 String pythonXml = HttpUtil.post(ServerConfig.PYTHON_COURSE_URL, pyData);
                 PythonDBCourseResult pyList = XmlUtil.converyToJavaBean(
@@ -111,7 +111,7 @@ public class SelectHelper {
         Map<String, String> javaData = getJavaParam(
                 selections, ServerConfig.JAVA_COURSE_REQUEST_KEY
         );
-        if (javaData != null) {
+        if (javaData.containsKey(ServerConfig.JAVA_COURSE_REQUEST_KEY)) {
             try {
                 String javaXml = HttpUtil.post(ServerConfig.JAVA_COURSE_URL, javaData);
                 JavaDBCourseList javaList = XmlUtil.converyToJavaBean(
@@ -137,7 +137,7 @@ public class SelectHelper {
         Map<String, String> phpData = getPHPParam(
                 selections, ServerConfig.PHP_COURSE_REQUEST_KEY
         );
-        if (phpData != null) {
+        if (phpData.containsKey(ServerConfig.PHP_COURSE_REQUEST_KEY)) {
             try {
                 String phpXml = HttpUtil.post(ServerConfig.PHP_COURSE_URL, phpData);
                 PHPDBCourseList phpList = XmlUtil.converyToJavaBean(
@@ -168,9 +168,7 @@ public class SelectHelper {
     ) {
         List<String> ids = extractIds(selections, ServerConfig.PHP_DB_INSTITUTION);
         Map<String, String> result = paramHelper(ids, requestKey);
-        if (result != null) {
-            result.put("action", "Statistic/coursesInfo");
-        }
+        result.put("action", "Statistic/coursesInfo");
         return result;
     }
 
@@ -182,17 +180,16 @@ public class SelectHelper {
     }
 
     private static Map<String, String> paramHelper(List<String> ids, String key) {
-        if (ids == null || ids.size() == 0) {
-            return null;
-        }
-
         Map<String, String> result = new HashMap<>();
-        StringBuilder idStr = new StringBuilder();
-        for (String id : ids) {
-            idStr.append(id).append(",");
+
+        if (ids != null && ids.size() > 0) {
+            StringBuilder idStr = new StringBuilder();
+            for (String id : ids) {
+                idStr.append(id).append(",");
+            }
+            result.put(key, idStr.substring(0, idStr.length() - 1));
         }
 
-        result.put(key, idStr.substring(0, idStr.length() - 1));
         return result;
     }
 

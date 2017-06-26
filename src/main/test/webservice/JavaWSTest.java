@@ -66,10 +66,6 @@ public class JavaWSTest {
 //        }
 
         List<Selection> selections = new LinkedList<>();
-        selections.add(new Selection(
-                141110001, 2,
-                30001, 1
-        ));
         Map<String, String> params = SelectHelper.getJavaParam(
                 selections, ServerConfig.JAVA_WS_COURSE_REQUEST_KEY
         );

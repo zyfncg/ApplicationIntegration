@@ -73,6 +73,11 @@ class SelectWSHelper {
         Map<String, String> pyData = SelectHelper.getPythonParam(
                 selections, ServerConfig.PYTHON_WS_COURSE_REQUEST_KEY
         );
+        if (!pyData.containsKey(ServerConfig.PYTHON_WS_COURSE_REQUEST_KEY)) {
+            PythonDBCourseList result = new PythonDBCourseList();
+            result.setCourseList(new LinkedList<>());
+            return result;
+        }
         return CourseWSHelper.getPythonWSCourseList(
                 ServerConfig.PYTHON_WS_COURSE_BY_ID_URL, pyData
         );
@@ -82,6 +87,11 @@ class SelectWSHelper {
         Map<String, String> javaData = SelectHelper.getJavaParam(
                 selections, ServerConfig.JAVA_WS_COURSE_REQUEST_KEY
         );
+        if (!javaData.containsKey(ServerConfig.JAVA_WS_COURSE_REQUEST_KEY)) {
+            JavaDBCourseList result = new JavaDBCourseList();
+            result.setCourseList(new LinkedList<>());
+            return result;
+        }
         return CourseWSHelper.getJavaWSCourseList(
                 ServerConfig.JAVA_WS_COURSE_BY_ID_URL, javaData
         );
