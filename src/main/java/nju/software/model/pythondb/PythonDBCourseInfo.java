@@ -12,9 +12,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "course")
 public class PythonDBCourseInfo implements CourseStandardized {
 
-    private int institutionId;
+    private int department_id;
 
-    private int courseId;
+    private int course_id;
 
     private String name;
 
@@ -22,7 +22,7 @@ public class PythonDBCourseInfo implements CourseStandardized {
 
     private String classtime;
 
-    private String type;
+    private String classtype;
 
     private String department;
 
@@ -32,33 +32,33 @@ public class PythonDBCourseInfo implements CourseStandardized {
     public PythonDBCourseInfo(
             int institutionId, int courseId, String name,
             String classroom, String classtime,
-            String type, String department
+            String classtype, String department
     ) {
-        this.institutionId = institutionId;
-        this.courseId = courseId;
+        this.department_id = institutionId;
+        this.course_id = courseId;
         this.name = name;
         this.classroom = classroom;
         this.classtime = classtime;
-        this.type = type;
+        this.classtype = classtype;
         this.department = department;
     }
 
-    public int getInstitutionId() {
-        return institutionId;
+    public int getDepartment_id() {
+        return department_id;
     }
 
     @XmlElement(name = "department_id")
-    public void setInstitutionId(int institutionId) {
-        this.institutionId = institutionId;
+    public void setDepartment_id(int department_id) {
+        this.department_id = department_id;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public int getCourse_id() {
+        return course_id;
     }
 
     @XmlElement(name = "course_id")
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourse_id(int course_id) {
+        this.course_id = course_id;
     }
 
     public String getName() {
@@ -88,13 +88,13 @@ public class PythonDBCourseInfo implements CourseStandardized {
         this.classtime = classtime;
     }
 
-    public String getType() {
-        return type;
+    public String getClasstype() {
+        return classtype;
     }
 
-    @XmlElement(name = "type")
-    public void setType(String type) {
-        this.type = type;
+    @XmlElement(name = "classtype")
+    public void setClasstype(String classtype) {
+        this.classtype = classtype;
     }
 
     public String getDepartment() {
@@ -109,8 +109,8 @@ public class PythonDBCourseInfo implements CourseStandardized {
     @Override
     public StandardCourseInfo toStandard() {
         return new StandardCourseInfo(
-                institutionId, courseId, 0, name, classroom,
-                classtime, type, department, "未知"
+                department_id, course_id, 0, name, classroom,
+                classtime, classtype, department, "未知"
         );
     }
 }
