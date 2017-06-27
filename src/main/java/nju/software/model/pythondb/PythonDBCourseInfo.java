@@ -22,7 +22,7 @@ public class PythonDBCourseInfo implements CourseStandardized {
 
     private String classtime;
 
-    private String classtype;
+    private String type;
 
     private String department;
 
@@ -32,14 +32,14 @@ public class PythonDBCourseInfo implements CourseStandardized {
     public PythonDBCourseInfo(
             int institutionId, int courseId, String name,
             String classroom, String classtime,
-            String classtype, String department
+            String type, String department
     ) {
         this.department_id = institutionId;
         this.course_id = courseId;
         this.name = name;
         this.classroom = classroom;
         this.classtime = classtime;
-        this.classtype = classtype;
+        this.type = type;
         this.department = department;
     }
 
@@ -88,13 +88,13 @@ public class PythonDBCourseInfo implements CourseStandardized {
         this.classtime = classtime;
     }
 
-    public String getClasstype() {
-        return classtype;
+    public String getType() {
+        return type;
     }
 
-    @XmlElement(name = "classtype")
-    public void setClasstype(String classtype) {
-        this.classtype = classtype;
+    @XmlElement(name = "type")
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getDepartment() {
@@ -110,7 +110,7 @@ public class PythonDBCourseInfo implements CourseStandardized {
     public StandardCourseInfo toStandard() {
         return new StandardCourseInfo(
                 department_id, course_id, 0, name, classroom,
-                classtime, classtype, department, "未知"
+                classtime, type, department, "未知"
         );
     }
 }
