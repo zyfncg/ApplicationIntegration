@@ -9,6 +9,7 @@ import nju.software.util.XmlUtil;
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.databinding.utils.BeanUtil;
 import org.apache.axis2.engine.DefaultObjectSupplier;
+import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,10 +19,11 @@ import java.util.LinkedList;
  *
  * 从Web Service获取统计数据
  */
+@Service(value = "statisticsWebService")
 public class StatisticsWebService {
 
     @SuppressWarnings("unchecked")
-    public static ListBean getCourseStatistics() {
+    public ListBean getCourseStatistics() {
         ListBean result = new ListBean();
         result.setList(new LinkedList<CourseInfo>());
 
@@ -74,7 +76,7 @@ public class StatisticsWebService {
     }
 
     @SuppressWarnings("unchecked")
-    public static ListBean getStudentStatistics() {
+    public ListBean getStudentStatistics() {
         ListBean result = new ListBean();
         result.setList(new LinkedList<StudentInfo>());
 

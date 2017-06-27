@@ -25,6 +25,9 @@ public class EDUIntegrationImpl implements EDUIntgerationWebService{
     @Autowired
     private SelectWebService selectWebService;
 
+    @Autowired
+    private StatisticsWebService statisticsWebService;
+
     @Override
     public String getAllCourses(int institutionId) {
         return CourseWebService.getAllCourses(institutionId);
@@ -37,13 +40,13 @@ public class EDUIntegrationImpl implements EDUIntgerationWebService{
 
     @Override
     public String getCourseStatistics() {
-        ListBean result = StatisticsWebService.getCourseStatistics();
+        ListBean result = statisticsWebService.getCourseStatistics();
         return XmlUtil.convertToXml(result);
     }
 
     @Override
     public String getStudentStatistics() {
-        ListBean result = StatisticsWebService.getStudentStatistics();
+        ListBean result = statisticsWebService.getStudentStatistics();
         return XmlUtil.convertToXml(result);
     }
 
