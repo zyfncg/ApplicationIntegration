@@ -29,7 +29,7 @@ public class WebServiceUtil {
      * @return 数据XML封装对象
      * @throws AxisFault 远程调用失败异常
      */
-    public static OMElement invoke(ServiceClient client, OMElement method) throws AxisFault {
+    public static synchronized OMElement invoke(ServiceClient client, OMElement method) throws AxisFault {
         method.build();
         return client.sendReceive(method);
     }
@@ -41,6 +41,7 @@ public class WebServiceUtil {
             EndpointReference reference = new EndpointReference(wsdl);
             Options options = client.getOptions();
             options.setTo(reference);
+            options.setTimeOutInMilliSeconds(60000);
         } catch (AxisFault axisFault) {
             System.out.println("从" + wsdl + "获取WSDL失败");
             axisFault.printStackTrace();
