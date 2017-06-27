@@ -24,6 +24,8 @@ public class StatisticsWebService {
 
     @SuppressWarnings("unchecked")
     public ListBean getCourseStatistics() {
+        long start = System.currentTimeMillis();
+
         ListBean result = new ListBean();
         result.setList(new LinkedList<CourseInfo>());
 
@@ -72,11 +74,15 @@ public class StatisticsWebService {
             e.printStackTrace();
         }
 
+        long end = System.currentTimeMillis();
+        System.out.println("调用课程统计信息时间：" + (end - start));
         return result;
     }
 
     @SuppressWarnings("unchecked")
     public ListBean getStudentStatistics() {
+        long start = System.currentTimeMillis();
+
         ListBean result = new ListBean();
         result.setList(new LinkedList<StudentInfo>());
 
@@ -125,6 +131,8 @@ public class StatisticsWebService {
             e.printStackTrace();
         }
 
+        long end = System.currentTimeMillis();
+        System.out.println("调用学生统计信息时间：" + (end - start));
         return result;
     }
 
