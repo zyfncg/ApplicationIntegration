@@ -23,6 +23,8 @@ public class WebServiceUtil {
 
     public static final ServiceClient javaClient = initClient(ServerConfig.JAVA_WSDL_URL);
 
+    public static final ServiceClient phpClient = initClient(ServerConfig.PHP_WSDL_URL);
+
     /**
      *
      * @param method 调用方法对象

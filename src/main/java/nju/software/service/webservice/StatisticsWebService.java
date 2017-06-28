@@ -74,6 +74,27 @@ public class StatisticsWebService {
             e.printStackTrace();
         }
 
+        // 从PHP Web Service服务器获得课程统计信息
+        try {
+            OMElement data = WebServiceUtil.invoke(
+                    WebServiceUtil.phpClient,
+                    WebServiceUtil.crateMethodElement(
+                            ServerConfig.PHP_TARGET_NAMESPACE,
+                            ServerConfig.PHP_WS_COURSE_STAT_URL,
+                            null
+                    )
+            );
+
+            ListBean list = XmlUtil.converyToJavaBean(
+                    data.getFirstElement().getText(),
+                    ListBean.class
+            );
+            result.getList().addAll(list.getList());
+        } catch (Exception e) {
+            System.out.println("PHP Web Service服务器获得课程统计信息失败");
+            e.printStackTrace();
+        }
+
         long end = System.currentTimeMillis();
         System.out.println("调用课程统计信息时间：" + (end - start));
         return result;
@@ -128,6 +149,27 @@ public class StatisticsWebService {
             result.getList().addAll(list.getList());
         } catch (Exception e) {
             System.out.println("Java Web Service服务器获得学生统计信息失败");
+            e.printStackTrace();
+        }
+
+        // 从PHP Web Service服务器获得学生统计信息
+        try {
+            OMElement data = WebServiceUtil.invoke(
+                    WebServiceUtil.phpClient,
+                    WebServiceUtil.crateMethodElement(
+                            ServerConfig.PHP_TARGET_NAMESPACE,
+                            ServerConfig.PHP_WS_STUDENT_STAT_URL,
+                            null
+                    )
+            );
+
+            ListBean list = XmlUtil.converyToJavaBean(
+                    data.getFirstElement().getText(),
+                    ListBean.class
+            );
+            result.getList().addAll(list.getList());
+        } catch (Exception e) {
+            System.out.println("PHP Web Service服务器获得学生统计信息失败");
             e.printStackTrace();
         }
 

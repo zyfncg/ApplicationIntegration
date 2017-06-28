@@ -163,13 +163,11 @@ public class SelectHelper {
         return paramHelper(ids, requestKey);
     }
 
-    private static Map<String, String> getPHPParam(
+    public static Map<String, String> getPHPParam(
             List<Selection> selections, String requestKey
     ) {
         List<String> ids = extractIds(selections, ServerConfig.PHP_DB_INSTITUTION);
-        Map<String, String> result = paramHelper(ids, requestKey);
-        result.put("action", "Statistic/coursesInfo");
-        return result;
+        return paramHelper(ids, requestKey);
     }
 
     public static Map<String, String> getJavaParam(

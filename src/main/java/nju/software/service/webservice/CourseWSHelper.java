@@ -38,6 +38,12 @@ class CourseWSHelper {
                     ).toStandard().toJavaList().getCourseList()
             );
 
+            result.getCourseList().addAll(
+                    getPHPWSCourseList(
+                            ServerConfig.PHP_WS_ALL_COURSE_URL, null
+                    ).toStandard().toJavaList().getCourseList()
+            );
+
             return XmlUtil.convertToXml(result);
         });
 
@@ -49,6 +55,12 @@ class CourseWSHelper {
             result.getCourseList().addAll(
                     getJavaWSCourseList(
                             ServerConfig.JAVA_WS_ALL_COURSE_URL, null
+                    ).toStandard().toPythonList().getCourseList()
+            );
+
+            result.getCourseList().addAll(
+                    getPHPWSCourseList(
+                            ServerConfig.PHP_WS_ALL_COURSE_URL, null
                     ).toStandard().toPythonList().getCourseList()
             );
 
@@ -136,6 +148,38 @@ class CourseWSHelper {
         }
         catch (Exception e) {
             System.out.println("从Java Web Service服务器获得课程信息失败");
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    static PHPDBCourseList getPHPWSCourseList(
+            String methodUrl, Map<String, String> params
+    ) {
+        PHPDBCourseList result = new PHPDBCourseList();
+        result.setCourseList(new LinkedList<>());
+
+        try {
+            OMElement data = WebServiceUtil.invoke(
+                    WebServiceUtil.phpClient,
+                    WebServiceUtil.crateMethodElement(
+                            ServerConfig.PHP_TARGET_NAMESPACE,
+                            methodUrl, params
+                    )
+            );
+
+            PHPDBCourseList list = XmlUtil.converyToJavaBean(
+                    data.getFirstElement().getText(),
+                    PHPDBCourseList.class
+            );
+
+            if (list != null) {
+                return list;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("从PHP Web Service服务器获得课程信息失败");
             e.printStackTrace();
         }
 

@@ -180,6 +180,38 @@ public class ServerConfig {
             properties.get("java_ws_course_by_id_url")
     );
 
+    private static final String PHP_WS_HOST = String.valueOf(
+            properties.get("php_ws_host")
+    );
+
+    public static final String PHP_WSDL_URL = PHP_WS_HOST + String.valueOf(
+            properties.get("php_wsdl_url")
+    );
+
+    public static final String PHP_TARGET_NAMESPACE = String.valueOf(
+            properties.get("php_target_namespace")
+    );
+
+    public static final String PHP_WS_COURSE_REQUEST_KEY = String.valueOf(
+            properties.get("php_ws_course_request_key")
+    );
+
+    public static final String PHP_WS_ALL_COURSE_URL = String.valueOf(
+            properties.get("php_ws_all_course_url")
+    );
+
+    public static final String PHP_WS_STUDENT_STAT_URL = String.valueOf(
+            properties.get("php_ws_student_stat_url")
+    );
+
+    public static final String PHP_WS_COURSE_STAT_URL = String.valueOf(
+            properties.get("php_ws_course_stat_url")
+    );
+
+    public static final String PHP_WS_COURSE_BY_ID_URL = String.valueOf(
+            properties.get("php_ws_course_by_id_url")
+    );
+
     public static List<Integer> getAllInstitutionIds() {
         List<Integer> ids = new LinkedList<>();
         ids.add(JAVA_DB_INSTITUTION);

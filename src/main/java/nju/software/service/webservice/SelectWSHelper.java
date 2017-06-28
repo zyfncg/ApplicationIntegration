@@ -33,6 +33,10 @@ class SelectWSHelper {
                     getPythonWSSelectList(selections).toStandard().toJavaList().getCourseList()
             );
 
+            result.getCourseList().addAll(
+                    getPHPWSSelectList(selections).toStandard().toJavaList().getCourseList()
+            );
+
             return XmlUtil.convertToXml(result);
         });
 
@@ -43,6 +47,10 @@ class SelectWSHelper {
 
             result.getCourseList().addAll(
                     getJavaWSSelectList(selections).toStandard().toPythonList().getCourseList()
+            );
+
+            result.getCourseList().addAll(
+                    getPHPWSSelectList(selections).toStandard().toPythonList().getCourseList()
             );
 
             return XmlUtil.convertToXml(result);
@@ -94,6 +102,20 @@ class SelectWSHelper {
         }
         return CourseWSHelper.getJavaWSCourseList(
                 ServerConfig.JAVA_WS_COURSE_BY_ID_URL, javaData
+        );
+    }
+
+    private static PHPDBCourseList getPHPWSSelectList(List<Selection> selections) {
+        Map<String, String> phpData = SelectHelper.getPHPParam(
+                selections, ServerConfig.PHP_COURSE_REQUEST_KEY
+        );
+        if (!phpData.containsKey(ServerConfig.PHP_COURSE_REQUEST_KEY)) {
+            PHPDBCourseList result = new PHPDBCourseList();
+            result.setCourseList(new LinkedList<>());
+            return result;
+        }
+        return CourseWSHelper.getPHPWSCourseList(
+                ServerConfig.PHP_WS_COURSE_BY_ID_URL, phpData
         );
     }
 }
