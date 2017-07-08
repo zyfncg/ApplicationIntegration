@@ -70,10 +70,10 @@ public class EDUIntegrationImpl implements EDUIntgerationWebService{
 
         ResultBean bean;
         if (result) {
-            bean = new ResultBean(true, "选课成功");
+            bean = new ResultBean(true, "退课成功");
         }
         else {
-            bean = new ResultBean(false, "选课失败");
+            bean = new ResultBean(false, "退课失败");
         }
         return XmlUtil.convertToXml(bean);
     }
