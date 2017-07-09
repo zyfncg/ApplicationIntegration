@@ -104,6 +104,18 @@ public class StatisticsWebService {
 
         long end = System.currentTimeMillis();
         System.out.println("调用课程统计信息时间：" + (end - start));
+
+        // 添加跨院系选课人数到课程统计信息中
+        List<CourseInfo> list = result.getList();
+        for (CourseInfo info : list) {
+            List<Selection> selections = selectionDao.findAllByCourseidAndCourseInstitution(
+                    info.getCourseid(), info.getInstitution()
+            );
+
+            if (selections != null && selections.size() > 1) {
+                info.setStudentNum(info.getStudentNum() + selections.size());
+            }
+        }
         return result;
     }
 
